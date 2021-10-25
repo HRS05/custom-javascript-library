@@ -1,0 +1,35 @@
+.hrsrock_modalMask
+{
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+border: 1px solid red;
+background: gray;
+position: fixed;
+opacity: 70%;
+}
+.hrsrock_modal
+{
+width: 400px;
+min-width: 400px;
+height: 300px;
+min-height: 300px;
+background-color: blue;
+position: fixed;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+margin: auto;
+border: 2px solid white;
+}
+.hrsrock_closeButton
+{
+float: right;
+padding: 2px 7px;
+cursor: pointer;
+margin-right: 5px;
+margin-top: 2px;
+font-size: 14pt;
+}

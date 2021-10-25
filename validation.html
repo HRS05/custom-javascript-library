@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<title>TMJRock Ecample</title>
+<script src='js/customJavascriptLibrary.js'></script>
+<script>
+function doSomething()
+{
+return $$$.validate("someForm").isValid({
+"nm":{
+"required":true,
+"max-length":20,
+"error-pane":"nmErrorSection",
+"error":{
+"required": "Name required",
+"max-length": "Name can not exceed 20 characters"
+}
+},
+"ad":{
+"required":true,
+"error-pane": "adErrorSection",
+"error":{
+"required": "Address required"
+}
+},
+"ct":{
+"invalid": -1,
+"error-pane": "ctErrorSection",
+"error":{
+"invalid": "Select city"
+}
+},
+"gender":{
+"required": true,
+"error-pane":"genderErrorSection",
+"error":{
+"required": "Select gender"
+}
+},
+"ag":{
+"required-state": true,
+"display-alert": true,
+"error":{
+"required-state": "Select I agree checkbox"
+}
+}
+});
+}
+
+
+</script>
+</head>
+<body>
+<h1>TMJRock Validations</h1>
+<form id='someForm' action='whatever' onsubmit='return doSomething()'>
+Name <input type='text' id='name' name='nm' >
+<span id='nmErrorSection'></span><br>
+Adress <textarea id='ad' name='ad'></textarea>
+<span id='adErrorSection'></span><br>
+Select City
+<select id='ct' name='ct'>
+<option value='-1'>Select City</option>
+<option value='1'>Manawar</option>
+<option value='2'>Ujjain</option>
+<option value='3'>Dewas</option>
+<option value='4'>Indore</option>
+</select>
+<span id='ctErrorSection'></span><br>
+Gender &nbsp;&nbsp;&nbsp;&nbsp;
+Male <input type='radio' name='gender' id='ml' value='M'>
+&nbsp;&nbsp;&nbsp;
+Female <input type='radio' name='gender' ud='fe' value'F'>
+&nbsp;&nbsp;&nbsp;
+<span id='genderErrorSection'></span><br>
+I Agree<input type='checkbox' name='ag' id='ag' value='Y'><br>
+<Button type='submit'>Register</button>      
+</form>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<title>AJAX Examples</title>
+<script src='js/customJavascriptLibrary.js'></script>
+<script>
+
+function getDesignation()
+{
+let titleSpan=$$$("title");
+titleSpan.html("");
+let code=$$$("code").value();
+
+$$$.ajax({
+"url": "servletTwo",
+"data": {
+"code": code
+},
+"methodType": "GET",
+"success": function(responseData){
+if(responseData=="INVALID")
+{
+alert("Invalid designation code");
+}
+else
+{
+var splits=responseData.split(",");
+titleSpan.html(splits[1]);
+}
+},
+"failure": function(){
+alert("Some problem");
+}
+});
+}
+
+
+
+function getDesignation123123()
+{
+var titleSpan=document.getElementById('title');
+titleSpan.innerHTML="";
+var code=document.getElementById('code').value;
+var xmlHttpRequest=new XMLHttpRequest();
+xmlHttpRequest.onreadystatechange=function(){
+if(this.readyState==4)
+{
+if(this.status==200)
+{
+var responseData=this.responseText;
+if(responseData=="INVALID")
+{
+alert("Invalid designation code");
+}
+else
+{ 
+var splits=responseData.split(",");
+titleSpan.innerHTML=splits[1];
+}
+}
+else
+{
+alert('some problem');
+}
+}
+};
+// In this example encodeURI is not required
+var requestURL="servletTwo?code="+encodeURI(code);
+xmlHttpRequest.open('GET',requestURL,true);
+xmlHttpRequest.send();
+}
+
+</script>
+</head>
+<body>
+<h1>Get type request with data Example</h1>
+Enter code 
+<input type='text' id='code'>
+<button type='button' onclick='getDesignation()'>Get Designation</button>
+<br>
+<br>
+Title <span id='title'></span>
+<br>
+<br>
+<a href='index.html'>Home</a>
+</body>
+</html> 

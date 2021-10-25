@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<title>TMJRock Grid Prototyping</title>
+
+
+<!-- TMJRock specific styling -->
+<style>
+
+.hrsrock_mygrid_header_division
+{
+overflow-x: hidden;
+overflow-y: hidden;
+width: 300px;
+}
+
+.hrsrock_mygrid_body_division
+{
+overflow-x:scroll;
+overflow-y:scroll;
+width: 300px;
+height:400px; 
+}
+
+.hrsrock_mygrid_head
+{
+border: 1px groove green;
+border-bottom:0px;
+border-spacing: 0px;
+border-collapse: collapse;
+background: lightgray;
+width: 750px;
+}
+
+.hrsrock_mygrid_head td  
+{
+border-left: 1px groove green; 
+border-right: 1px groove green; 
+border-top: 1px groove green; 
+border-bottom: 0px; 
+
+width: 50px;
+text-align: right;
+}
+
+.hrsrock_mygrid_head td+td  
+{
+width: 100px;
+text-align: left;
+}
+
+.hrsrock_mygrid_head td+td+td  
+{
+width: 150px;
+text-align: left;
+}
+
+.hrsrock_mygrid_head td+td+td+td  
+{
+width: 200px;
+text-align: left;
+}
+
+.hrsrock_mygrid_head td+td+td+td+td  
+{
+width: 200px;
+text-align: left;
+}
+
+.hrsrock_mygrid_body
+{
+border: 1px groove green;
+border-spacing: 0px;
+border-collapse: collapse;
+width: 750px;
+}
+
+.hrsrock_mygrid_body td  
+{
+border: 1px groove green; 
+width: 50px;
+text-align: right;
+}
+
+.hrsrock_mygrid_body td+td  
+{
+width: 100px;
+text-align: left;
+}
+
+.hrsrock_mygrid_body td+td+td  
+{
+width: 150px;
+text-align: left;
+}
+
+.hrsrock_mygrid_body td+td+td+td  
+{
+width: 200px;
+text-align: left;
+}
+
+.hrsrock_mygrid_body td+td+td+td+td  
+{
+width: 200px;
+text-align: left;
+}
+
+.hrsrock_mygrid_pagination_division
+{
+margin-top: 20px;
+}
+
+.hrsrock_mygrid_pagination td
+{
+width: 20px; 
+text-align: center; 
+}
+
+.hrsrock_mygrid_pagination_division a {
+ background-color: red;
+ color: white;
+ padding: 9px 11px;
+ text-decoration: none;
+ text-transform: uppercase;
+}
+
+</style>
+
+<!-- user specific styling -->
+<style>
+.someStyle
+{
+width:900px;
+height:500px;
+border:1px solid red;
+overflow:auto;
+}
+</style>
+
+<script>
+class Student
+{
+constructor(rollNumber,name,nameOfMother,nameOfFather)
+{
+this.rollNumber=rollNumber;
+this.name=name;
+this.nameOfMother=nameOfMother;
+this.nameOfFather=nameOfFather;
+}//constructor ends
+
+}//Student class ends
+
+class Grid
+{
+constructor(dataTableId,dataTablePaginationId,students,pageSize)
+{
+this.dataTableId=dataTableId;
+this.dataTablePaginationId=dataTablePaginationId;
+this.students=students;
+this.pageSize=pageSize;
+this.pageNumber=1;   
+this.numberOfPaginationControls=5;
+this.update();	
+this.updatePagination();
+}//constructor ends
+
+setPage(pageNumber)
+{
+this.pageNumber=pageNumber;
+this.update();
+this.updatePagination();
+return false;
+}//setPage function ends
+
+update()
+{
+var dataTable=document.getElementById(this.dataTableId);
+while(dataTable.rows.length>0) dataTable.deleteRow(0);
+var tr;
+var td;
+var startFromIndex=(this.pageNumber-1)*this.pageSize;
+var endAtIndex=startFromIndex+this.pageSize-1;
+if(endAtIndex>=this.students.length) endAtIndex=this.students.length-1;
+var x;
+for(x=startFromIndex;x<=endAtIndex;x++)
+{
+tr=document.createElement("tr");
+td=document.createElement("td");
+td.innerHTML=(x+1);
+tr.appendChild(td);
+td=document.createElement("td");
+td.innerHTML=this.students[x].rollNumber;
+tr.appendChild(td);
+td=document.createElement("td");
+td.innerHTML=this.students[x].name;
+tr.appendChild(td);
+td=document.createElement("td");
+td.innerHTML=this.students[x].nameOfMother;
+tr.appendChild(td);
+td=document.createElement("td");
+td.innerHTML=this.students[x].nameOfFather;
+tr.appendChild(td);
+dataTable.appendChild(tr);
+}
+}//update function ends
+
+updatePagination()
+{
+function createPageChangeFunction(obj,pageNumber)
+{
+return function(){
+obj.setPage(pageNumber); 
+};
+}
+var startFrom=((Math.floor((this.pageNumber-1)/this.numberOfPaginationControls)+1)-1)*this.numberOfPaginationControls+1;  
+var endAt=startFrom+this.numberOfPaginationControls-1;
+var numberOfPages=this.students.length/this.pageSize;
+if(this.students.length%this.pageSize!=0) numberOfPages++; 
+if(endAt>numberOfPages) endAt=numberOfPages;
+var dataTablePagination=document.getElementById(this.dataTablePaginationId);
+while(dataTablePagination.rows.length>0) dataTablePagination.deleteRow(0);
+var x;
+var tr
+var td;
+var anchor;
+
+tr=document.createElement("tr");
+if(startFrom>1)
+{
+td=document.createElement("td");
+anchor=document.createElement("a");
+anchor.text='prev';
+anchor.href='javascript:void(0)';
+anchor.onclick=createPageChangeFunction(this,startFrom-1);
+td.appendChild(anchor);
+tr.appendChild(td);
+}
+for(x=startFrom;x<=endAt;x++)
+{
+td=document.createElement("td");
+if(x==this.pageNumber)
+{
+td.innerHTML="<b>"+x+"</b>";
+}
+else
+{
+anchor=document.createElement("a");
+anchor.text=x;
+anchor.href='javascript:void(0)';
+anchor.onclick=createPageChangeFunction(this,x);
+td.appendChild(anchor);
+}
+tr.appendChild(td);
+}
+if(endAt<numberOfPages)
+{
+td=document.createElement("td");
+anchor=document.createElement("a");
+anchor.text='next';
+anchor.href='javascript:void(0)';
+anchor.onclick=createPageChangeFunction(this,endAt+1);
+td.appendChild(anchor);
+tr.appendChild(td);
+}
+dataTablePagination.appendChild(tr);
+}//updatePagination function ends
+
+}//Grid class ends
+
+var model={
+"grid": null
+};
+
+function loader()
+{
+var hrsrock_mygrid_header_division=document.querySelector(".hrsrock_mygrid_header_division");
+var hrsrock_mygrid_body_division=document.querySelector(".hrsrock_mygrid_body_division");
+hrsrock_mygrid_body_division.addEventListener('scroll',function(){
+hrsrock_mygrid_header_division.scrollLeft=hrsrock_mygrid_body_division.scrollLeft;
+});
+
+var i;
+var students=new Array();
+for(i=101;i<=1000;i++)
+{
+students.push(new Student(i,i+" Name",i+" Mother",i+" Father"));
+}
+model.grid=new Grid('dataTable','dataTablePagination',students,35);
+}//loader function ends
+
+window.addEventListener('load',loader);  
+
+</script>
+
+</head>
+<body>
+<div class='someStyle'>
+
+<div class='hrsrock_mygrid_header_division'>
+<table class='hrsrock_mygrid_head'>
+<tr>
+<td>S.No.</td>
+<td>Roll No.</td> 
+<td>Name</td> 
+<td>Mother</td> 
+<td>Father</td>
+</tr>
+</table>
+</div>
+
+<div class='hrsrock_mygrid_body_division'>
+<table class='hrsrock_mygrid_body' id='dataTable'>
+</table>
+</div>
+
+<div class='hrsrock_mygrid_pagination_division'>
+<table class='hrsrock_mygrid_pagination' id='dataTablePagination'>
+</table>
+
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+

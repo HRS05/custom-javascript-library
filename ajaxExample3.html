@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<title>AJAX Examples</title>
+<script src='js/customJavascriptLibrary.js'></script> 
+<script>
+
+function saveEnquiry()
+{
+var firstName=$$$("firstName").value();
+var lastName=$$$("lastName").value();
+var age=$$$("age").value();
+
+var customer={
+"firstName" : firstName,
+"lastName" : lastName,
+"age" : age
+};
+
+var whatever=$$$("whatever");
+whatever.html("");
+$$$.ajax({
+"methodType": "POST",
+"url": "servletThree",
+"sendJSON": true,
+"data": customer,
+"success": function(responseData){
+var customer=JSON.parse(responseData)
+var a="First Name : "+customer.firstName+"<br>";
+a=a+"Last Name : "+customer.lastName+"<br>";
+a=a+"Age : "+customer.age;
+whatever.html(a);
+},
+"failure": function(){
+alert("Some Problem");
+} 
+});
+}
+
+
+
+</script>
+</head>
+<body>
+<h1>Post type request</h1>
+First name <input type='text' id='firstName'><br>
+Last name <input type='text' id='lastName'><br>
+Age<input type='text' id='age'><br>
+<button type='button' onclick='saveEnquiry()'>Save</button>
+<br>
+<div id='whatever'></div>
+<br>
+<a href='index.html'>Home</a>
+</body>
+</html> 

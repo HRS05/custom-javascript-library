@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<title>AJAX Examples</title>
+
+<link rel="stylesheet" href="css/customCssFile.css">
+ 
+<script src='js/customJavascriptLibrary.js'></script> 
+<script>
+//user written functions
+
+function abBeforeOpening()
+{
+alert('ab before opening get called');
+return true;
+}
+
+function abOpened()
+{
+alert('Modal with ab opened');
+}
+
+function abBeforeClosing()
+{
+alert('ab before closing get called');
+return true;
+} 
+
+function abClosed()
+{
+alert("Modal with ab closed");
+}
+
+function createModal1()
+{
+$$$.modals.show("ab");
+}
+
+
+</script>
+</head>
+<body>
+
+<button onCLick='createModal1()'>Show First Modal</button>
+<div id='ab' style='display:none' forModal='true' size="400X300" header="Indian people" 
+footer="@copyright" maskColor="gray" modalBackgroundColor="#FFFDD0" 
+closeButton="true" beforeOpening="abBeforeOpening()" afterOpening="abOpened()" 
+beforeClosing="abBeforeClosing()" afterClosing="abClosed()"
+>
+Indians are the nationals and citizens of India, the second most populous nation in the world, containing 17.50% of the world's population. In India, the term "Indian" refers to nationality, rather than a particular ethnicity or language; the Indian nationality consists of dozens of regional ethno-linguistic groups, reflecting the rich and complex history of the country. 
+</div>
+
+</body>
+</html> 
